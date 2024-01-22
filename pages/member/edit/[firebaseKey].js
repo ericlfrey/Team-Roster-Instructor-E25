@@ -10,7 +10,7 @@ export default function EditMemberPage() {
 
   useEffect(() => {
     getSingleMember(firebaseKey).then(setMember);
-  }, []);
+  }, [firebaseKey]);
   return (
     <MemberForm memberObj={member} />
   );
