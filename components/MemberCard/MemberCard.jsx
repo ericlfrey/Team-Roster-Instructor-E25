@@ -21,9 +21,7 @@ function MemberCard({ memberObj, onUpdate }) {
           <Button variant="primary">View</Button>
         </Link>
         <Link passHref href={`/member/edit/${memberObj.firebaseKey}`}>
-          <Button variant="success" onClick={() => console.warn('Edit')}>
-            Edit
-          </Button>
+          <Button variant="success">Edit</Button>
         </Link>
         <Button variant="danger" onClick={handleDelete}>
           Delete

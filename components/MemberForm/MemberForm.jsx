@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useRouter } from 'next/router';
@@ -13,20 +13,26 @@ const initialState = {
 
 function MemberForm({ memberObj }) {
   const [formInput, setFormInput] = useState(initialState);
-
   const router = useRouter();
-
   const { user } = useAuth();
+
+  useEffect(() => {
+    if (memberObj.firebaseKey) setFormInput(memberObj);
+  }, [memberObj]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const payload = { ...formInput, uid: user.uid };
-    createMember(payload).then(({ name }) => {
-      const patchPayload = { firebaseKey: name };
-      updateMember(patchPayload).then(() => {
-        router.push('/team');
+    if (memberObj.firebaseKey) {
+      updateMember(formInput).then(() => router.push(`/member/${formInput.firebaseKey}`));
+    } else {
+      const payload = { ...formInput, uid: user.uid };
+      createMember(payload).then(({ name }) => {
+        const patchPayload = { firebaseKey: name };
+        updateMember(patchPayload).then(() => {
+          router.push('/team');
+        });
       });
-    });
+    }
   };
 
   const handleChange = (e) => {
