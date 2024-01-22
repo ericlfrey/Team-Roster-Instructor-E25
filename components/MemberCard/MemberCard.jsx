@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Button, Card } from 'react-bootstrap';
+import styles from './MemberCard.module.css';
 
 function MemberCard({ memberObj, onUpdate }) {
   const handleClick = () => {
     onUpdate();
   };
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card className={styles.memberCard}>
       <Card.Img variant="top" src={memberObj.image} />
       <Card.Body>
         <Card.Title>{memberObj.name}</Card.Title>
