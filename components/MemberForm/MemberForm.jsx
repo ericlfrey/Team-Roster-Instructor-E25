@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { useRouter } from 'next/router';
+import { createMember, updateMember } from '../../api/memberData';
+import { useAuth } from '../../utils/context/authContext';
 
 const initialState = {
   image: '',
@@ -11,8 +14,19 @@ const initialState = {
 function MemberForm({ memberObj }) {
   const [formInput, setFormInput] = useState(initialState);
 
-  const handleSubmit = () => {
-    console.warn('Form Submitted');
+  const router = useRouter();
+
+  const { user } = useAuth();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const payload = { ...formInput, uid: user.uid };
+    createMember(payload).then(({ name }) => {
+      const patchPayload = { firebaseKey: name };
+      updateMember(patchPayload).then(() => {
+        router.push('/team');
+      });
+    });
   };
 
   const handleChange = (e) => {
