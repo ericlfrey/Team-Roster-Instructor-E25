@@ -7,16 +7,28 @@ function MemberCard({ memberObj, onUpdate }) {
   const handleClick = () => {
     onUpdate();
   };
+
+  const handleDelete = () => {
+    console.warn('Delete');
+  };
   return (
     <Card className={styles.memberCard}>
       <Card.Img variant="top" src={memberObj.image} />
       <Card.Body>
         <Card.Title>{memberObj.name}</Card.Title>
         <Card.Text>{memberObj.role}</Card.Text>
-        <Button variant="primary" onClick={handleClick}>
-          Click Me!
-        </Button>
       </Card.Body>
+      <Card.Footer className="d-flex justify-content-between">
+        <Button variant="primary" onClick={handleClick}>
+          View
+        </Button>
+        <Button variant="success" onClick={() => console.warn('Edit')}>
+          Edit
+        </Button>
+        <Button variant="danger" onClick={handleDelete}>
+          Delete
+        </Button>
+      </Card.Footer>
     </Card>
   );
 }
