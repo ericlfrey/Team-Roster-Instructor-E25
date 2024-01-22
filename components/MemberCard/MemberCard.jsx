@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { Button, Card } from 'react-bootstrap';
 import Link from 'next/link';
 import styles from './MemberCard.module.css';
+import { deleteMember } from '../../api/memberData';
 
 function MemberCard({ memberObj, onUpdate }) {
   const handleDelete = () => {
-    console.warn('Delete');
-    onUpdate();
+    deleteMember(memberObj.firebaseKey).then(() => onUpdate());
   };
   return (
     <Card className={styles.memberCard}>
